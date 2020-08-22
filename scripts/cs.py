@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import roslib
 import rospy
@@ -32,7 +32,7 @@ class cs_node(object):
 
         # subscriber
         self.sum_err = 0
-        rospy.Subscriber('genetic',Errors,self.run_cso)
+        rospy.Subscriber('/genetic',Errors,self.run_cso)
         self.pid_vals_=[0,0,0]
 
     def run_cso(self, msg):
@@ -151,4 +151,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    results.close()
