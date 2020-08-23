@@ -18,7 +18,7 @@ def levy_flight(Lambda):
 class Individual:
     def __init__(self):
         self.__position = np.random.rand(cf.get_dimension()) * (cf.get_max_domain() - cf.get_min_domain())  + cf.get_min_domain()
-        self.__fitness = fn.calculation(self.__position,0) # iteration = 0
+        self.__fitness = fn.calculation(0, 0, 0,self.__position,0) # iteration = 0
 
     def get_position(self):
         return self.__position

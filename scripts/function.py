@@ -6,13 +6,17 @@ https://www.sfu.ca/~ssurjano/index.html
 """
 
 
-def calculation(array, t):#as you want
-    fitness = 1/error_based_fitness(array)
+def calculation(err, int_err, prev_err, array, t):#as you want
+    fitness_inverse = error_based_fitness(err, int_err, prev_err, array)
+    if fitness_inverse == 0:
+       fitness = 0
+    else:
+       fitness = 1/fitness_inverse
     return fitness
 
-def error_based_fitness(param_vals):
+def error_based_fitness(err, int_err, prev_err, param_vals):
     cost = 0 
-    terms = np.array([error, int_err, (err - prev_err)])
+    terms = np.array([err, int_err, (err - prev_err)])
     cost = np.array(param_vals)*terms
     return abs(np.sum(cost))
 

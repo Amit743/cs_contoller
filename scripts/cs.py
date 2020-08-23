@@ -15,7 +15,7 @@ from pid_controller.msg import PID
 
 class cs_node(object):
     def __init__(self, PopulationSize, MaxDomain, MinDomain, Lambda, Pa, Step_Size, Dimension, Trial, Iteration):
-        self.PoppulationSize = PopulationSize
+        self.PopulationSize = PopulationSize
         self.MaxDomain = MaxDomain
         self.MinDomain = MinDomain
         self.Lambda = Lambda
@@ -66,7 +66,7 @@ class cs_node(object):
 
         	"""Find Initial Best"""
         	TrialBestPosition = cs_list[0].get_position()
-        	TrialBestFitness = fn.calculation(cs_list[0].get_position(),0)
+        	TrialBestFitness = fn.calculation(self.err, self.int_err, self.prev_err ,cs_list[0].get_position(),0)
 
         	"""↓↓↓Main Loop↓↓↓"""
         	for iteration in range(self.Iteration):
@@ -74,7 +74,7 @@ class cs_node(object):
         	    """Generate New Solutions"""
         	    for i in range(len(cs_list)):
         	        cs_list[i].get_cuckoo()
-        	        cs_list[i].set_fitness(fn.calculation(cs_list[i].get_position(),iteration))
+        	        cs_list[i].set_fitness(fn.calculation(self.err, self.int_err, self.prev_err ,cs_list[i].get_position(),iteration))
 	
         	        """random choice (say j)"""
         	        j = np.random.randint(low=0, high=self.PopulationSize)
@@ -94,7 +94,7 @@ class cs_node(object):
         	        r = np.random.rand()
         	        if(r < cf.get_Pa()):
         	            cs_list[a].abandon()
-        	            cs_list[a].set_fitness(fn.calculation(cs_list[a].get_position(),iteration))
+        	            cs_list[a].set_fitness(fn.calculation(self.err, self.int_err, self.prev_err ,cs_list[a].get_position(),iteration))
 
         	    """Sort to Find the Best"""
         	    cs_list = sorted(cs_list, key=lambda ID: ID.get_fitness())
@@ -113,9 +113,11 @@ class cs_node(object):
         	    """results_list.append(str(TrialBestPosition))
 	
         results_writer.writerow(results_list)"""
-        p_ = int(FinalBestPosition[0])
-        i_ = int(FinalBestPosition[1])
-        d_ = int(FinalBestPosition[2])
+        FinalPosition = str(FinalBestPosition)
+        FinalPosition = FinalPosition.split(" ")
+        p_ = int(FinalPosition[0])
+        i_ = int(FinalPosition[1])
+        d_ = int(FinalPosition[2])
         self.pid_vals_[0] = p_
 	self.pid_vals_[1] = i_
 	self.pid_vals_[2] = d_

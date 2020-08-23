@@ -10,7 +10,9 @@ project(cs_controller)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
-  roslib
+  genmsg
+  message_generation
+  vectornav
   hammerhead_control
   pid_controller
 )
