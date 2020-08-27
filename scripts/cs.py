@@ -102,22 +102,17 @@ class cs_node(object):
         	    if cs_list[0].get_fitness() > TrialBestFitness:
         	        TrialBestFitness = cs_list[0].get_fitness()
         	        TrialBestPosition = cs_list[0].get_position()
-                    
-                    """Updating Final Best values"""
-                    if TrialBestFitness > FinalBestFitness:
-                        FinalBestFitness = TrialBestFitness
-                        FinalBestPosition = TrialBestPosition
 	
         	    """sys.stdout.write("\r Trial:%3d , Iteration:%7d, BestFitness:%.4f" % (trial , iteration, BestFitness))"""
 
         	    """results_list.append(str(TrialBestPosition))
 	
         results_writer.writerow(results_list)"""
-        FinalPosition = str(FinalBestPosition)
-        FinalPosition = FinalPosition.split(" ")
-        p_ = int(FinalPosition[0])
-        i_ = int(FinalPosition[1])
-        d_ = int(FinalPosition[2])
+        FinalPIDvals = np.array(TrialBestPosition)
+        print(FinalPIDvals)
+        p_ = float(FinalPIDvals[0])
+        i_ = float(FinalPIDvals[1])
+        d_ = float(FinalPIDvals[2])
         self.pid_vals_[0] = p_
 	self.pid_vals_[1] = i_
 	self.pid_vals_[2] = d_
